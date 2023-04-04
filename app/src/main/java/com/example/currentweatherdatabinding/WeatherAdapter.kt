@@ -6,11 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.example.currentweatherdatabinding.data.WeatherData
+import com.example.currentweatherdatabinding.ui.WeatherUIState
+import com.example.currentweatherdatabinding.ui.WeatherViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
-class WeatherAdapter(val weather: ArrayList<WeatherData>) :
+class WeatherAdapter(
+    var weather: WeatherUIState
+) :
     RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,20 +39,24 @@ class WeatherAdapter(val weather: ArrayList<WeatherData>) :
 
     }
 
+    fun update(w: WeatherUIState)  {
+        weather = w
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
-        // Log.d("MY_TAG", "Created holder")
+        Log.d("MY_TAG", "Created viewholder")
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.city.text = weather[position].name
-        holder.tmp.text = weather[position].main.temp.toString()
-        holder.humid.text = weather[position].main.humidity.toString()
-        holder.windSpeed.text = weather[position].wind.speed.toString()
-        holder.windDir.rotation = weather[position].wind.deg.toFloat()
+        holder.city.text = weather.weatherList[position].name
+        holder.tmp.text = weather.weatherList[position].main.temp.toString()
+        holder.humid.text = weather.weatherList[position].main.humidity.toString()
+        holder.windSpeed.text = weather.weatherList[position].wind.speed.toString()
+        holder.windDir.rotation = weather.weatherList[position].wind.deg.toFloat()
 
-        Picasso.get().load("http://openweathermap.org/img/wn/${weather[position].weather[0].icon}@2x.png").
+        Picasso.get().load("http://openweathermap.org/img/wn/${weather.weatherList[position].weather[0].icon}@2x.png").
         into(holder.icon, object: Callback {
             override fun onSuccess() {
                 Log.d("MY_TAG", "Image downloaded")
@@ -56,11 +66,11 @@ class WeatherAdapter(val weather: ArrayList<WeatherData>) :
                 Log.e("MY_TAG", e.toString())
             }
         })
-        // Log.d("MY_TAG", "Bind ${holder.city.text}")
+        Log.d("MY_TAG", "Bind ${holder.city.text}")
     }
 
     override fun getItemCount(): Int {
-        return weather.size
+        return weather.weatherList.size
     }
 
 
