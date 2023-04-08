@@ -9,6 +9,8 @@ import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.net.URL
 import java.util.*
+import java.util.concurrent.Flow
+import kotlin.collections.ArrayList
 
 class WeatherRepository(
     private val ioDispatcher: CoroutineDispatcher
@@ -16,7 +18,6 @@ class WeatherRepository(
     private val apiKey = "4eccec95ad7702cb548cdf5f39f7b6c6"
     private var cities = mutableSetOf<String>()
     var weather = arrayListOf<WeatherData> ()
-
     private suspend fun fetchWeatherOne(city: String) {
         withContext(ioDispatcher) {
             val weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey&units=metric";
@@ -44,8 +45,18 @@ class WeatherRepository(
         }
     }
 
-    suspend fun addCity(city: String) {
+    suspend fun addCity(city: String): Boolean {
+        if (cities.contains(city)) {
+            return false
+        }
         cities.add(city)
         fetchWeatherOne(city)
+        return true
+    }
+
+    fun getWeatherAll(): ArrayList<WeatherData> {
+        val weatherNew = arrayListOf<WeatherData>()
+        weatherNew.addAll(weather)
+        return weatherNew
     }
 }

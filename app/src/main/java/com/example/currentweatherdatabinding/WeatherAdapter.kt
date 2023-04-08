@@ -1,5 +1,6 @@
 package com.example.currentweatherdatabinding
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currentweatherdatabinding.data.WeatherData
 import com.example.currentweatherdatabinding.ui.WeatherUIState
 import com.example.currentweatherdatabinding.ui.WeatherViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.flow.StateFlow
 
 class WeatherAdapter(
     var weather: WeatherUIState
@@ -41,11 +45,11 @@ class WeatherAdapter(
 
     fun update(w: WeatherUIState)  {
         weather = w
+        Log.d("MY_TAG", "Data updated")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
-        Log.d("MY_TAG", "Created viewholder")
         return ViewHolder(itemView)
     }
 
@@ -59,7 +63,7 @@ class WeatherAdapter(
         Picasso.get().load("http://openweathermap.org/img/wn/${weather.weatherList[position].weather[0].icon}@2x.png").
         into(holder.icon, object: Callback {
             override fun onSuccess() {
-                Log.d("MY_TAG", "Image downloaded")
+                return
             }
 
             override fun onError(e: java.lang.Exception?) {
@@ -72,6 +76,26 @@ class WeatherAdapter(
     override fun getItemCount(): Int {
         return weather.weatherList.size
     }
+}
 
+class WeatherDiffUtilCallback(private val oldList: ArrayList<WeatherData>,
+                            private val newList:ArrayList<WeatherData>): DiffUtil.Callback() {
 
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].name == newList[newItemPosition].name
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].weather == newList[newItemPosition].weather &&
+                oldList[oldItemPosition].main == newList[newItemPosition].main &&
+                oldList[oldItemPosition].wind == newList[newItemPosition].wind
+    }
 }
