@@ -23,14 +23,20 @@
         android:layout_marginStart="16dp"
         android:text="@string/search">
     </Button>
-    <ScrollView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RecyclerView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item" />
-    </ScrollView>
-
+        android:layout_height="match_parent"
+        android:name="com.example.currentweatherdatabinding.ShortFragment"
+        android:layout_weight="1"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/purple_200"
+        android:textColor="@color/black"
+        android:id="@+id/changeFragment"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="16dp"
+        android:text="Сменить вид">
+    </Button>
 </LinearLayout>

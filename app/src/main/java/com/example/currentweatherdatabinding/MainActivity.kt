@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -21,24 +23,16 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         // ViewModel
         val weatherViewModel: WeatherViewModel by viewModels()
 
-        // RecyclerView
-        val rv = findViewById<RecyclerView>(R.id.RecyclerView)
-        val layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        rv.layoutManager = layoutManager
-        val adapter = WeatherAdapter(WeatherUIState())
-        rv.adapter = adapter
+        // Fragments
+        var isDetailed = false
+        supportFragmentManager.fragmentFactory = WeatherFragmentFactory(weatherViewModel, false)
 
-        // Default data
-//        val cities = resources.getStringArray(R.array.cities)
-//        for (city in cities) {
-//            weatherViewModel.addCity(city)
-//        }
+        // Creating
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
         // Search
         val btn = findViewById<Button>(R.id.searchWeather)
@@ -53,18 +47,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-        // Collecting data
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                weatherViewModel.uiState.collect { data ->
-                    Log.d("MY_TAG", "New item! List is ${data.weatherList}!")
-                    val diffUtilCallback = WeatherDiffUtilCallback(adapter.weather.weatherList, data.weatherList)
-                    val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
-                    adapter.update(data)
-                    diffResult.dispatchUpdatesTo(adapter)
+        // Changing fragments
+        val btnChange = findViewById<Button>(R.id.changeFragment)
+        btnChange.setOnClickListener {
+            if (isDetailed) {
+                supportFragmentManager.commit {
+                    replace(R.id.fragment_container_view, ShortFragment(weatherViewModel))
+                }
+            } else {
+                supportFragmentManager.commit {
+                    replace(R.id.fragment_container_view, DetailedFragment(weatherViewModel))
                 }
             }
+            isDetailed = !isDetailed
         }
     }
 }

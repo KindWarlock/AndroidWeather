@@ -1,14 +1,13 @@
 package com.example.currentweatherdatabinding
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currentweatherdatabinding.data.WeatherData
@@ -16,12 +15,11 @@ import com.example.currentweatherdatabinding.ui.WeatherUIState
 import com.example.currentweatherdatabinding.ui.WeatherViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.flow.StateFlow
 
-class WeatherAdapter(
+class DetailedWeatherAdapter(
     var weather: WeatherUIState
 ) :
-    RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+    RecyclerView.Adapter<DetailedWeatherAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -49,7 +47,7 @@ class WeatherAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_detailed, parent, false)
         return ViewHolder(itemView)
     }
 

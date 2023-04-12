@@ -16,7 +16,7 @@ class WeatherViewModel : ViewModel() {
 
     fun fetchWeather(city: String) {
         _uiState.update { it.copy(weatherList = repository.getWeatherAll()) }
-        Log.d("MY_TAG", "Updated uiState with $city")
+        Log.d("MY_TAG", "Updated uiState with $city: ${repository.getWeatherAll()}")
     }
 
     fun addCity(city: String) {
