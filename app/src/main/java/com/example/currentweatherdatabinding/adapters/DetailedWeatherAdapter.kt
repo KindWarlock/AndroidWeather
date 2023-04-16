@@ -1,4 +1,4 @@
-package com.example.currentweatherdatabinding
+package com.example.currentweatherdatabinding.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.currentweatherdatabinding.R
 import com.example.currentweatherdatabinding.data.WeatherData
 import com.example.currentweatherdatabinding.ui.WeatherUIState
-import com.example.currentweatherdatabinding.ui.WeatherViewModel
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 

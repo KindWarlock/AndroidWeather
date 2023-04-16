@@ -1,4 +1,4 @@
-package com.example.currentweatherdatabinding
+package com.example.currentweatherdatabinding.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -6,31 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentFactory
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.currentweatherdatabinding.adapters.DetailedWeatherAdapter
+import com.example.currentweatherdatabinding.R
+import com.example.currentweatherdatabinding.adapters.WeatherDiffUtilCallback
 import com.example.currentweatherdatabinding.ui.WeatherUIState
 import com.example.currentweatherdatabinding.ui.WeatherViewModel
 import kotlinx.coroutines.launch
 
-class ShortFragment(val weatherViewModel: WeatherViewModel) : Fragment() {
+class DetailedFragment(val weatherViewModel: WeatherViewModel) : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         Log.d("MY_TAG", "Created ShortFragment")
-        val view = inflater.inflate(R.layout.fragment_short, container, false)
+        val view = inflater.inflate(R.layout.fragment_detailed, container, false)
 
         // RecyclerView
         val rv = view.findViewById<RecyclerView>(R.id.RecyclerView)
-        val layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        val layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         rv.layoutManager = layoutManager
-        val adapter = ShortWeatherAdapter(WeatherUIState())
+        val adapter = DetailedWeatherAdapter(WeatherUIState())
         rv.adapter = adapter
 
         // Default data

@@ -1,4 +1,4 @@
-package com.example.currentweatherdatabinding
+package com.example.currentweatherdatabinding.fragments
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
