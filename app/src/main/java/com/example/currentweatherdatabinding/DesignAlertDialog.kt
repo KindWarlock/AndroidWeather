@@ -12,11 +12,11 @@ class DesignAlertDialog: DialogFragment() {
         const val DETAILED_VIEW = 1
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val items = arrayOf("Короткое", "Детализированное")
+        val items = arrayOf(getString(R.string.viewShort), getString(R.string.viewDetailed))
         val isDetailed: Boolean = arguments?.getBoolean("isDetailed") ?: false
         return activity?.let {
             AlertDialog.Builder(it)
-                .setTitle("Вид")
+                .setTitle(getString(R.string.viewTitle))
                 .setSingleChoiceItems(items,
                     if (!isDetailed) SHORT_VIEW else DETAILED_VIEW,
                     activity as DialogInterface.OnClickListener

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="humid">Humidity (%):</string>
+    <string name="wind">m/s</string>
+    <string name="search">Search</string>
+    <string name="placeholder">test</string>
+    <string name="viewShort">Short</string>
+    <string name="viewDetailed">Detailed</string>
+    <string name="viewTitle">View</string>
+    <string name="changeView">Change view</string>
+    <string name="title">Weather</string>
+</resources>

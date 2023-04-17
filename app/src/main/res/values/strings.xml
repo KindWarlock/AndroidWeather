@@ -1,14 +1,19 @@
 <resources>
-    <string name="app_name">CurrentWeatherDataBinding</string>
-    <string name="api_key">4eccec95ad7702cb548cdf5f39f7b6c6</string>
+    <string name="app_name" translatable="false">CurrentWeatherDataBinding</string>
+    <string name="api_key" translatable="false">4eccec95ad7702cb548cdf5f39f7b6c6</string>
     <string-array name="cities">
         <item>Irkutsk</item>
         <item>London</item>
         <item>Raccoon-City</item>
     </string-array>
-    <string name="temp">\u2103</string>
+    <string name="temp" translatable="false">\u2103</string>
     <string name="humid">Влажность (%):</string>
     <string name="wind">м/с</string>
     <string name="search">Найти</string>
     <string name="placeholder">тест</string>
+    <string name="viewShort">Кратко</string>
+    <string name="viewDetailed">Детально</string>
+    <string name="viewTitle">Вид</string>
+    <string name="changeView">Сменить вид</string>
+    <string name="title">Погода</string>
 </resources>
